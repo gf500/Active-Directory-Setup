@@ -1,14 +1,14 @@
 # Active-Directory
 Active Directory Home-Lab
 
-This project demonstrates the setup and configuration of an Active Directory home-lab environment for ACME, a fictional company. ACME is a manufacturing company with 500 employees. The company's headquarters is located in Montreal with a branch office in Boston and a factory in Edmonton. By setting up this lab environment, we aim to showcase the implementation of an AD infrastructure that reflects the organizational structure of a large-scale company. This readme provides an overview of the project and guides you through the steps to recreate the lab setup and configuration.
+This project demonstrates the setup and configuration of an Active Directory home-lab environment for ACME, a fictional company. The company's headquarters is located in Montreal with a branch office in Boston. By setting up this lab environment, we aim to showcase the implementation of an AD infrastructure that reflects the organizational structure of a large-scale company. This readme provides an overview of the project and guides you through the steps to recreate the lab setup and configuration.
 
 ## Lab Environment Setup
-For our starting environment, we're using VMware Workstation to create a virtualized setup for our Active Directory home-lab. We've set up two virtual machines to simulate our network:
+For our starting environment, we're using VMware Workstation to create a virtualized setup for our Active Directory home-lab. We've set up two virtual machines to simulate our network, we will be adding another VM for the Boston Domain Controller later on.
 
 
 Windows Server 2022 VM:
-- This VM acts as the domain controller, managing user accounts, group policies, and other Active Directory services. It's running Windows Server 2022.
+- This VM acts as the domain controller for the Montreal headquarters, managing user accounts, group policies, and other Active Directory services.
 
 Windows 10 Workstation VM:
 - This VM represents a regular workstation within the ACME network. It runs Windows 10 and allows us to test and demonstrate the features of our Active Directory infrastructure.
@@ -41,4 +41,6 @@ Promoting the server to Domain Controller:
 
 - We will leave all remaining options as-is and continue clicking Next until Install.
 - Once the installation completed you will be brought back to the login screen.
+
+We now have a SRV-MTLDC01 serving as the domain controller for the acme.com root domain.
 
