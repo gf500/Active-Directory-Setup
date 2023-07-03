@@ -19,28 +19,64 @@ Windows 10 Workstation VM:
 We will first change our server hostname and then promote our Windows Server VM to a domain controller and create our acme.com forest:
 
 1. Change Hostname:
-   - In the Windows Server VM settings, click on "Rename this PC."
-   - Rename our machine to SRV-MTLDC01, where SRV stands for Server, MTL represents Montreal, DC represents Domain Controller, and 01 is the server number.
-   - Restart the VM for the changes to take effect.
+      - In the Windows Server VM settings, click on "Rename this PC."
+      - Rename our machine to SRV-MTLDC01, where SRV stands for Server, MTL represents Montreal, DC represents Domain Controller, and 01 is the server number.
+      - Restart the VM for the changes to take effect.
 
 2. Promoting the server to Domain Controller:
     
-
-Promoting the server to Domain Controller:
-- In Server Manager, click on "Add roles and features", in the Server Roles tab select Active Directory Domain Services.
-- We keep features as is and Next, we will click “Next” and “Install” to finish up the ADDS install. 
-- In Server Manager, in the top right corner we now have a new yellow triangle, clicking on this, we see a pending Post-deployment Configuration option called “Promote this server to a Domain Controller”.
-- Select "Promote this server to a domain controller".
-- Choose the option to add a new forest since we are starting from scratch and enter the root domain name as acme.com.
+   - In Server Manager, click on "Add roles and features", in the Server Roles tab select Active Directory Domain Services.
+   - We keep features as is and Next, we will click “Next” and “Install” to finish up the ADDS install. 
+   - In Server Manager, in the top right corner we now have a new yellow triangle, clicking on this, we see a pending Post-deployment Configuration option called “Promote this server to a Domain Controller”.
+   - Select "Promote this server to a domain controller".
+   - Choose the option to add a new forest since we are starting from scratch and enter the root domain name as acme.com.
 
 ![image](https://github.com/gf500/Active-Directory/assets/121585575/015735d6-0afa-4020-8acb-db2543e39579)
 
-- Click Next, we can leave the options as-is, add a DSRM password and click Next again.
+   - Click Next, we can leave the options as-is, add a DSRM password and click Next again.
 
 ![image](https://github.com/gf500/Active-Directory/assets/121585575/9180c4a6-bb25-4008-94a2-e9b82b090f5c)
 
-- We will leave all remaining options as-is and continue clicking Next until Install.
-- Once the installation completed you will be brought back to the login screen.
+   - We will leave all remaining options as-is and continue clicking Next until Install.
+   - Once the installation completed you will be brought back to the login screen.
 
 We now have a SRV-MTLDC01 serving as the domain controller for the acme.com root domain.
+
+
+## DNS Setup
+
+In order to establish proper name resolution within our Active Directory environment, DNS needs to be configured on the domain controller. 
+
+1. Install DNS Server Role
+
+   - Open the Server Manager on the Windows Server VM (SRV-MTLDC01).
+   - Click on "Add roles and features" to launch the Add Roles and Features Wizard.
+   - Proceed through the wizard, selecting the default options until you reach the "Server Roles" section.
+   - Select "DNS Server" from the list of server roles and continue with the wizard.
+   - Review the information provided and complete the installation process.
+
+2. Configure DNS Zones
+
+   - Launch the DNS Manager from the Server Manager or by searching for "DNS Manager" in the Start menu.
+   - In the DNS Manager, expand the server name and right-click on "Forward Lookup Zones."
+   - Select "New Zone" to start the New Zone Wizard.
+   - Follow the wizard to create a new primary zone for your domain (acme.com).
+      - Choose the zone type as "Primary zone."
+      - Select "To all DNS servers running on domain controllers in this domain."
+      - Allow the wizard to create a new file for the zone.
+      - Choose whether to allow dynamic updates based on your requirements.
+
+3. Configure DNS Forwarders
+
+   - In the DNS Manager, right-click on the server name and select "Properties."
+   - Go to the "Forwarders" tab.
+   - Enable "Forwarders" and enter the IP addresses of your preferred external DNS servers.
+   - Click OK to save the changes.
+
+4. Verify DNS Functionality
+
+   - Open a command prompt on the domain controller (SRV-MTLDC01).
+   - Run the command: nslookup acme.com (replace acme.com with your actual domain name).
+   - Verify that the command returns the IP address of the domain controller itself.
+
 
