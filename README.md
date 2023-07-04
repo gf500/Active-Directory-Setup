@@ -13,6 +13,11 @@ Windows Server 2022 VM:
 Windows 10 Workstation VM:
 - This VM represents a regular workstation within the ACME network. It runs Windows 10 and allows us to test and demonstrate the features of our Active Directory infrastructure.
 
+We assigned these static addresses for our lab
+Network: 192.168.10.0
+Default Gateway: 192.168.10.1
+SRV-MTLDC01: 192.168.10.10
+Workstation: 192.168.10.2
 
 ## Domain Controller
 
@@ -42,41 +47,46 @@ We will first change our server hostname and then promote our Windows Server VM 
 
 We now have a SRV-MTLDC01 serving as the domain controller for the acme.com root domain.
 
+## Adding the Workstation VM to the Domain.
+
+Our Windows 10 VM has a clean instal and a local_admin account, we now need to add it to the domain, allowing users to log in with their domain credentials and access domain resources.
+
+1. Change Computer Name:
+
+   - In the search bar, type "About your PC" and press enter.
+   - Click on "Rename this PC".
+   - In the Rename your PC window, enter "WRK-MTL01" as the new computer name.
+   - Click "OK" to save the changes. You will be prompted to restart the workstation for the changes to take effect.
+  
+2. Verify Connectivity:
+   - Open a Command Prompt on the workstation.
+   - Type the command "ping 192.168.10.10" and press Enter.
+   - Verify that the workstation can successfully ping the domain controller (SRV-MTLDC01) to ensure network connectivity.
+
+Note: For the workstation to be added to the domain it must resolve the name of the domain, acme.com, to do so make sure you have the workstation's "Preferred DNS server" pointing to the Domain Controller IP address.
+
+3. Add Workstation to the Domain:
+   - In the "System Properties" window, go to the "Computer Name" tab and click on the "Change" button next to "To rename this computer or change its domain...".
+   - In the "Computer Name/Domain Changes" window, select the "Domain" option.
+   - Enter the name of your domain, acme.com in the "Domain" field.
+   - Click "OK" to proceed.
+   - Provide the credentials of a user account with permission to join workstations to the domain when prompted.
+   - Click "OK" to join the workstation to the domain.
+   - Restart the workstation for the changes to take effect.
+
 
 ## DNS Setup
 
-In order to establish proper name resolution within our Active Directory environment, DNS needs to be configured on the domain controller. 
+### DNS Forwarder
 
-1. Install DNS Server Role
+As our domain controller serves as the DNS server for our users within our domain, we need to address the case where our users want to access websites and resources outside our network. In such cases, the domain controller needs to be configured to handle DNS queries for external domain names by utilizing DNS forwarders.
 
-   - Open the Server Manager on the Windows Server VM (SRV-MTLDC01).
-   - Click on "Add roles and features" to launch the Add Roles and Features Wizard.
-   - Proceed through the wizard, selecting the default options until you reach the "Server Roles" section.
-   - Select "DNS Server" from the list of server roles and continue with the wizard.
-   - Review the information provided and complete the installation process.
+1. Add new conditional forwarder
+   - In Server Manager, click Tools and select DNS, you should see the DNS Manager window.
+     ![image](https://github.com/gf500/Active-Directory/assets/121585575/4961e4d5-84b6-44ea-9637-2be06d0e9eb5)
+   - Right-click on the Conditional Forwarder folder and select New Conditional Forwarder.
 
-2. Configure DNS Zones
 
-   - Launch the DNS Manager from the Server Manager or by searching for "DNS Manager" in the Start menu.
-   - In the DNS Manager, expand the server name and right-click on "Forward Lookup Zones."
-   - Select "New Zone" to start the New Zone Wizard.
-   - Follow the wizard to create a new primary zone for your domain (acme.com).
-      - Choose the zone type as "Primary zone."
-      - Select "To all DNS servers running on domain controllers in this domain."
-      - Allow the wizard to create a new file for the zone.
-      - Choose whether to allow dynamic updates based on your requirements.
 
-3. Configure DNS Forwarders
-
-   - In the DNS Manager, right-click on the server name and select "Properties."
-   - Go to the "Forwarders" tab.
-   - Enable "Forwarders" and enter the IP addresses of your preferred external DNS servers.
-   - Click OK to save the changes.
-
-4. Verify DNS Functionality
-
-   - Open a command prompt on the domain controller (SRV-MTLDC01).
-   - Run the command: nslookup acme.com (replace acme.com with your actual domain name).
-   - Verify that the command returns the IP address of the domain controller itself.
 
 
