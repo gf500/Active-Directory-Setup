@@ -136,7 +136,7 @@ We will now set up the DHCP on the domain controller to automate the assignment 
 
 To better organize our network and ensure efficient communication between our computers and the appropriate Domain Controller, we will now set up Sites and Services. This configuration will help our computers in Montreal quickly find the right domain controller for tasks like authentication and accessing various services. It simplifies the process by eliminating the need to search through the entire network, making our network operations more efficient.
 
-1. Configuration
+### Configuration
    - In Server Manager, under Tools select Active Directory Sites and Services.
    - Locate the existing "Default-First_site-Name" site and rename it Montreal-HQ.
      ![image](https://github.com/gf500/Active-Directory/assets/121585575/2964a667-4216-43c7-b2ef-20539fd5211c)
@@ -144,6 +144,8 @@ To better organize our network and ensure efficient communication between our co
      ![image](https://github.com/gf500/Active-Directory/assets/121585575/067c2a86-c72f-465b-bd2d-87318ce80ed0)
    - Add our network address range for our Montreal-HQ, the same we gave in the DHCP section, which is 192.168.10.0/24.
    - Select the Montreal-HQ site under "Select a site object for this prefix." and click "OK".
+
+We've now finished our basic setup for our HQ Domain Controller, we are now ready to move on the create OUs, Users Accounts and joining our workstation VM to the domain in the next part of our project.
 
 
 
