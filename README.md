@@ -103,7 +103,7 @@ We will now set up the DHCP on the domain controller to automate the assignment 
 2. Authorization
    - Once installed, we will have a Post-deployment configuration yellow notification in our Server Manager Dashboard.
    - Select it and click "Complete DHCP configuration"
-     ![image](https://github.com/gf500/Active-Directory/assets/121585575/e7c292f0-a2c5-4e16-b850-c607a9c6a6fc)
+   ![image](https://github.com/gf500/Active-Directory/assets/121585575/e7c292f0-a2c5-4e16-b850-c607a9c6a6fc)
 
    - This post-installation wizard will let us authorize the server to provide DHCP services, click "Next" and "Commit".
 
@@ -139,9 +139,9 @@ To better organize our network and ensure efficient communication between our co
 ### Configuration
    - In Server Manager, under Tools select Active Directory Sites and Services.
    - Locate the existing "Default-First_site-Name" site and rename it Montreal-HQ.
-     ![image](https://github.com/gf500/Active-Directory/assets/121585575/2964a667-4216-43c7-b2ef-20539fd5211c)
+![image](https://github.com/gf500/Active-Directory/assets/121585575/2964a667-4216-43c7-b2ef-20539fd5211c)
    - Still in the Sites and Services window locate the Subnets folder, right-click, and select "New Subnet...".
-     ![image](https://github.com/gf500/Active-Directory/assets/121585575/067c2a86-c72f-465b-bd2d-87318ce80ed0)
+![image](https://github.com/gf500/Active-Directory/assets/121585575/067c2a86-c72f-465b-bd2d-87318ce80ed0)
    - Add our network address range for our Montreal-HQ, the same we gave in the DHCP section, which is 192.168.10.0/24.
    - Select the Montreal-HQ site under "Select a site object for this prefix." and click "OK".
 
