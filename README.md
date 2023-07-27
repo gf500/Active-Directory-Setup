@@ -88,6 +88,7 @@ As our domain controller serves as the DNS server for our users within our domai
      
    - Right-click on the Conditional Forwarder folder and select New Conditional Forwarder.
    - In the "DNS Domain" field, enter the DNS domain you want to forward requests to. In our case we will enter google's DNS address at 8.8.8.8.
+     
 
 ![image](https://github.com/gf500/Active-Directory/assets/121585575/5218bcf6-782a-4283-a75c-f6fd345d6058)
    
