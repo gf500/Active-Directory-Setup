@@ -36,7 +36,7 @@ We will first change our server hostname and then promote our Windows Server VM 
    - Select "Promote this server to a domain controller".
    - Choose the option to add a new forest since we are starting from scratch and enter the root domain name as acme.com.
 
-![image](https://github.com/gf500/Active-Directory-Setup/assets/121585575/015735d6-0afa-4020-8acb-db2543e39579)
+![image](https://github.com/gf500/Active-Directory/assets/121585575/015735d6-0afa-4020-8acb-db2543e39579)
 
    - Click Next, we can leave the options as-is, add a DSRM password and click Next again.
 
