@@ -36,11 +36,9 @@ We will first change our server hostname and then promote our Windows Server VM 
    - Select "Promote this server to a domain controller".
    - Choose the option to add a new forest since we are starting from scratch and enter the root domain name as acme.com.
 
-![image](https://github.com/gf500/Active-Directory/assets/121585575/015735d6-0afa-4020-8acb-db2543e39579)
 
    - Click Next, we can leave the options as-is, add a DSRM password and click Next again.
 
-![image](https://github.com/gf500/Active-Directory/assets/121585575/9180c4a6-bb25-4008-94a2-e9b82b090f5c)
 
    - We will leave all remaining options as-is and continue clicking Next until Install.
    - Once the installation completed you will be brought back to the login screen.
@@ -84,13 +82,11 @@ As our domain controller serves as the DNS server for our users within our domai
 1. Add new conditional forwarder
    - In Server Manager, click Tools and select DNS, you should see the DNS Manager window.
 
-![image](https://github.com/gf500/Active-Directory/assets/121585575/4961e4d5-84b6-44ea-9637-2be06d0e9eb5)
      
    - Right-click on the Conditional Forwarder folder and select New Conditional Forwarder.
    - In the "DNS Domain" field, enter the DNS domain you want to forward requests to. In our case we will enter google's DNS address at 8.8.8.8.
      
 
-![image](https://github.com/gf500/Active-Directory/assets/121585575/5218bcf6-782a-4283-a75c-f6fd345d6058)
    
    - Click "OK" to save the forwarder settings.
    - We can add other DNS options for redundancy, including Cloudflare's 1.1.1.1 or quad9 at 9.9.9.9.
@@ -109,36 +105,29 @@ We will now set up the DHCP on the domain controller to automate the assignment 
    - Once installed, we will have a Post-deployment configuration yellow notification in our Server Manager Dashboard.
    - Select it and click "Complete DHCP configuration"
 
-![image](https://github.com/gf500/Active-Directory/assets/121585575/e7c292f0-a2c5-4e16-b850-c607a9c6a6fc)
 
    - This post-installation wizard will let us authorize the server to provide DHCP services, click "Next" and "Commit".
 
 3. Scope Configuration
    - Back in Server Manager, under Tools select DHCP.
 
-![image](https://github.com/gf500/Active-Directory/assets/121585575/8ccc0e73-f7cf-4696-86ad-75e166e984f4)
 
    - In the DHCP management console, locate the "IPv4" section under the server name.
    - Right-click on "IPv4" and select "New Scope" to create a new DHCP scope.
    - Follow the prompts in the New Scope Wizard to configure the DHCP scope settings, in our case we will name it Montreal-HQ with its network address as the description.
 
-![image](https://github.com/gf500/Active-Directory/assets/121585575/852fa8c0-4fcd-4cfc-b2a4-5899856866ea)
 
    - For our address range we are going to start at .20 so we may have some room for other specific servers.
 
-![image](https://github.com/gf500/Active-Directory/assets/121585575/d079901c-6343-49fe-8a21-ddd4629cfd0a)
 
    - We are going to leave the Exlusions and Delay as-is since we already excluded a batch of addresses from our range.
 
-![image](https://github.com/gf500/Active-Directory/assets/121585575/7f5c6c79-e4e2-47b1-aaf3-ffa928855951)
 
    - We click "Next" until the Router (Default Gateway) window, here we enter the gateway's address, in our case 192.168.10.1.
 
-![image](https://github.com/gf500/Active-Directory/assets/121585575/74f761f7-fc31-41cd-a961-8d7df0bd1bcf)
 
    - We can leave the Domain Name and DNS Servers section as-is since it is correct.
 
-![image](https://github.com/gf500/Active-Directory/assets/121585575/dcf737ca-6d87-41a2-aedc-51d4148fee4f)
 
    - Click "Next" to skip WINS Servers as well.
    - We will be asked if we want to activate this scope now, we select "Yes" and click "Next".
@@ -152,11 +141,9 @@ To better organize our network and ensure efficient communication between our co
    - In Server Manager, under Tools select Active Directory Sites and Services.
    - Locate the existing "Default-First_site-Name" site and rename it Montreal-HQ.
 
-![image](https://github.com/gf500/Active-Directory/assets/121585575/2964a667-4216-43c7-b2ef-20539fd5211c)
 
    - Still in the Sites and Services window locate the Subnets folder, right-click, and select "New Subnet...".
 
-![image](https://github.com/gf500/Active-Directory/assets/121585575/067c2a86-c72f-465b-bd2d-87318ce80ed0)
 
    - Add our network address range for our Montreal-HQ, the same we gave in the DHCP section, which is 192.168.10.0/24.
    - Select the Montreal-HQ site under "Select a site object for this prefix." and click "OK".
